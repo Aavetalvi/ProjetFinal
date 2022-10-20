@@ -1,74 +1,42 @@
 package fr.ajc.ProjetFinal.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@SequenceGenerator(name = "utilisateur_gen", sequenceName = "utilisateur_seq", initialValue = 1, allocationSize = 1)
 public class Utilisateur {
 
 	@Id
-	@GeneratedValue(generator = "utilisateur_gen")
-	private Long id;
-	private String identifiant;
+	private String email;
 	private String mdp;
 
 	@OneToOne(mappedBy = "utilisateur")
 	@JsonIgnoreProperties("utilisateur")
 	private Client client;
 
-	public Utilisateur(String identifiant, String mdp) {
-		this.identifiant = identifiant;
-		this.mdp = mdp;
-	}
-
-	public UserDetails toUserDetails() {
-		return new User(identifiant, mdp, new ArrayList<>());
-	}
-
-	public Utilisateur() {
-	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getIdentifiant() {
-		return identifiant;
-	}
-
-	public void setIdentifiant(String identifiant) {
-		this.identifiant = identifiant;
-	}
-
-	public String getMdp() {
-		return mdp;
-	}
-
-	public void setMdp(String mdp) {
-		this.mdp = mdp;
-	}
+	@CollectionTable(name = "utilisateur_role", joinColumns = @JoinColumn(name = "email_utilisateur", nullable = false))
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
+	private List<Role> roles;
 
 }
