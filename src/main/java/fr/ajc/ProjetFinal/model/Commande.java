@@ -15,6 +15,13 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @SequenceGenerator(name = "commande_gen", sequenceName = "commande_seq", initialValue = 1, allocationSize = 1)
 public class Commande {

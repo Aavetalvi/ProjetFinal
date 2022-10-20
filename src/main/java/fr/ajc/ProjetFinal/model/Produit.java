@@ -12,6 +12,13 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @SequenceGenerator(name = "produit_gen", sequenceName = "produit_seq", initialValue = 1, allocationSize = 1)
 public class Produit {
