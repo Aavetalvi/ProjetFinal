@@ -44,4 +44,8 @@ public class Produit {
 	@JsonIgnoreProperties("produit")
 	private List<Taille> tailles;
 
+	@OneToMany(mappedBy = "produit")
+	@JsonIgnoreProperties("produit")
+	private List<ImageProduit> images;
+
 }
