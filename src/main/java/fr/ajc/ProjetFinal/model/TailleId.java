@@ -21,6 +21,6 @@ public class TailleId implements Serializable {
 	private String taille;
 
 	@Column(name = "id_produit")
-	private Integer idProduit;
+	private Long idProduit;
 
 }

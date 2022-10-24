@@ -42,4 +42,6 @@ public class Commande {
 	@JoinTable(name = "commande_produit", joinColumns = @JoinColumn(name = "id_commande"), inverseJoinColumns = @JoinColumn(name = "id_produit"))
 	@JsonIgnoreProperties("commandes")
 	private List<Produit> produits;
+
+	private double total;
 }

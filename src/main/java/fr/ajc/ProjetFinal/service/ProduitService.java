@@ -5,48 +5,86 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+
+import org.springframework.stereotype.Service;
 import fr.ajc.ProjetFinal.model.Produit;
 import fr.ajc.ProjetFinal.repository.ProduitRepository;
 
 
+import fr.ajc.ProjetFinal.exception.IdNotFound;
+import fr.ajc.ProjetFinal.model.ImageProduit;
+
+import fr.ajc.ProjetFinal.model.Taille;
 
 
 @Service
 public class ProduitService {
-	
 
-    @Autowired ProduitRepository pr;
-    
-    
-    public List<Produit> findAll() {
-        return pr.findAll();
-    }
+	@Autowired
+	ProduitRepository pr;
 
-    public Optional<Produit> findById(Long id) {
-        return pr.findById(id);
-    }
-    
-    public Produit create(Produit produit) {
-        return pr.save(produit);
-    }
+	@Autowired
+	TailleService ts;
 
-    public Produit modifyProduit(Produit p) {
-        
-        if (Objects.isNull(p.getId()) || !(this.findById(p.getId()).isPresent())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "l'id n'est pas dans la BDD");
-        }
-        else {
-            Produit produit = p;
-        }
-        return pr.save(p);
-    }
-    
-    public void deleteProduit(Long id) {
-        pr.deleteById(id);
-    }
+	@Autowired
+	ImageProduitService ips;
+
+	public List<Produit> findAll() {
+		return pr.findAll();
+	}
+
+	public Optional<Produit> findById(Long id) {
+		return pr.findById(id);
+	}
+
+	public Produit create(Produit produit) {
+		// on créer le produit pour avoir l'ID
+		Produit p = pr.save(produit);
+
+		// on créer les tailles et images en BDD avec le nouveau produit
+		setTailleEtImage(p);
+		return p;
+	}
+
+	public Produit modifyProduit(Produit p) throws IdNotFound {
+		if (Objects.isNull(p.getId()) || !(this.findById(p.getId()).isPresent())) {
+			throw new IdNotFound("le body du produit ne contient pas d'id ou un id qui n'existe pas.");
+		} else {
+
+			Produit x = this.findById(p.getId()).get();
+			// On supprime les images précédentes
+			ips.deleteAllImage(x);
+
+			// on créer les tailles et images en BDD avec le nouveau produit
+			setTailleEtImage(p);
+
+			Produit produit = pr.save(p);
+		}
+		return findById(p.getId()).get();
+	}
+
+	public void deleteProduit(Long id) throws IdNotFound {
+		Produit p = pr.findById(id).orElseThrow(() -> new IdNotFound("Le produit à l'id [" + id + "] n'existe pas."));
+		for (Taille taille : p.getTailles()) {
+			ts.deleteTaille(p, taille.getTaille());
+		}
+		for (ImageProduit i : p.getImages()) {
+			ips.deleteImage(i);
+		}
+		pr.deleteById(id);
+	}
+
+	public void setTailleEtImage(Produit p) {
+		// on créer les tailles en BDD avec le nouveau produit (pour avoir son id) (si
+		// des tailles sont renseignées)
+		if (p.getTailles() != null && p.getTailles().size() > 0)
+			ts.create(p);
+
+		// on créer les images en BDD avec le nouveau produit (pour avoir son id) (si
+		// des images sont renseignées)
+		if (p.getImages() != null && p.getImages().size() > 0)
+			ips.create(p);
+	}
 
 }
