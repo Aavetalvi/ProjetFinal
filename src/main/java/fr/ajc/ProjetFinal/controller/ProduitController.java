@@ -35,7 +35,9 @@ public class ProduitController {
 
 	@GetMapping
 	public List<Produit> getProduits() {
+
 		return ps.findAll();
+
 	}
 
 	@GetMapping("/{id}")
@@ -47,6 +49,7 @@ public class ProduitController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Produit createProduit(@RequestBody Produit produit) {
 		if (Objects.nonNull(produit.getId()))
+
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "l'id est non nul");
 
 		return ps.create(produit);
@@ -54,7 +57,6 @@ public class ProduitController {
 
 	@PutMapping
 	public Produit updateProduit(@RequestBody Produit p) {
-
 		try {
 			return ps.modifyProduit(p);
 		} catch (IdNotFound e) {
@@ -65,6 +67,7 @@ public class ProduitController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void deleteProduit(@PathVariable Long id) {
+
 		try {
 			ps.deleteProduit(id);
 		} catch (IdNotFound e) {

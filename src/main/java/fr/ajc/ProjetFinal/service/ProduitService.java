@@ -5,13 +5,18 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.stereotype.Service;
+import fr.ajc.ProjetFinal.model.Produit;
+import fr.ajc.ProjetFinal.repository.ProduitRepository;
+
 
 import fr.ajc.ProjetFinal.exception.IdNotFound;
 import fr.ajc.ProjetFinal.model.ImageProduit;
-import fr.ajc.ProjetFinal.model.Produit;
+
 import fr.ajc.ProjetFinal.model.Taille;
-import fr.ajc.ProjetFinal.repository.ProduitRepository;
+
 
 @Service
 public class ProduitService {
