@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SequenceGenerator(name = "produit_gen", sequenceName = "produit_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "produit_gen", sequenceName = "produit_seq", initialValue = 13, allocationSize = 1)
 public class Produit {
 
 	@Id
@@ -34,14 +36,16 @@ public class Produit {
 	@Column(name = "description_longue")
 	private String descriptionLongue;
 	private String marque;
+
+	@Enumerated(EnumType.STRING)
 	private Categorie categorie;
 
 	@ManyToMany(mappedBy = "produits")
-	@JsonIgnoreProperties("produits")
+	@JsonIgnoreProperties({ "produits", "commandes" })
 	private List<Commande> commandes;
 
 	@OneToMany(mappedBy = "produit")
-	@JsonIgnoreProperties("produit")
+	@JsonIgnoreProperties({ "produit", "tailleId" })
 	private List<Taille> tailles;
 
 	@OneToMany(mappedBy = "produit")
