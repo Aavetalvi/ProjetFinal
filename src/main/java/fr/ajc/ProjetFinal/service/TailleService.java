@@ -17,6 +17,13 @@ public class TailleService {
 	@Autowired
 	TailleRepository tr;
 
+	public Integer findStockByTaille(String taille, Long id) {
+		Integer i = Math.toIntExact(id);
+		System.out.println(taille);
+		return tr.findStockByTaille(i, taille);
+
+	}
+
 	public List<Taille> create(Produit p) {
 		List<Taille> tailles = new ArrayList<>();
 

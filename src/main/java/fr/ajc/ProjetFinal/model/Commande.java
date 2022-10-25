@@ -29,7 +29,6 @@ public class Commande {
 	@Id
 	@GeneratedValue(generator = "commande_gen")
 	private Long id;
-	private boolean confirme;
 	@Column(name = "date_creation")
 	private LocalDate dateCreation;
 

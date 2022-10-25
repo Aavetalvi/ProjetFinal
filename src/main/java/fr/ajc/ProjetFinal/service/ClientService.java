@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import fr.ajc.ProjetFinal.exception.EmptyIdException;
@@ -56,6 +55,10 @@ public class ClientService {
 
 	public Optional<Client> getClient(Long id) {
 		return clientRepository.findById(id);
+	}
+
+	public Optional<Client> getClientByMail(String mail) {
+		return clientRepository.FindByEmail(mail);
 	}
 
 }
