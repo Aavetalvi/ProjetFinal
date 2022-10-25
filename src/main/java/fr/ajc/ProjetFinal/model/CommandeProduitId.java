@@ -23,4 +23,7 @@ public class CommandeProduitId implements Serializable {
 	@Column(name = "id_produit")
 	private Long idProduit;
 
+	@Column(name = "taille")
+	private String taille;
+
 }

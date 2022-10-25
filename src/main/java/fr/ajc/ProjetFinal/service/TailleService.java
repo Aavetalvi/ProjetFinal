@@ -19,7 +19,6 @@ public class TailleService {
 
 	public Integer findStockByTaille(String taille, Long id) {
 		Integer i = Math.toIntExact(id);
-		System.out.println(taille);
 		return tr.findStockByTaille(i, taille);
 
 	}

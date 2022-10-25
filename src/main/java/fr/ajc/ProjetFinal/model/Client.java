@@ -28,7 +28,7 @@ public class Client {
 	@Id
 	@GeneratedValue(generator = "client_gen")
 	private Long id;
-	
+
 	private String nom;
 	private String prenom;
 
