@@ -31,6 +31,7 @@ public class CommandeProduitService {
 			CommandeProduitId cpi = new CommandeProduitId();
 			cpi.setIdCommande(c.getId());
 			cpi.setIdProduit(produitTo.getProduit().getId());
+
 			cp.setId(cpi);
 			cpr.save(cp);
 		}

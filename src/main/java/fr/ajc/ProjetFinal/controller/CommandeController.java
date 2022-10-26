@@ -53,12 +53,12 @@ public class CommandeController {
 	}
 
 	@PostMapping
-	public void create(@RequestBody CommandeTo commandeTo) {
+	public String create(@RequestBody CommandeTo commandeTo) {
 		if (commandeTo.getId() != null)
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'id doit etre nul");
 
 		try {
-			service.create(commandeTo);
+			return service.create(commandeTo).getId().toString();
 		} catch (RelationException | EmptyIdException | StockInsuffisantException | IdNotFound e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}

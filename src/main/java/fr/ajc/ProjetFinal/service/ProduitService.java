@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ajc.ProjetFinal.exception.IdNotFound;
+import fr.ajc.ProjetFinal.model.Categorie;
 import fr.ajc.ProjetFinal.model.ImageProduit;
 import fr.ajc.ProjetFinal.model.Produit;
 import fr.ajc.ProjetFinal.model.Taille;
@@ -33,6 +34,11 @@ public class ProduitService {
 		return pr.findById(id);
 	}
 
+	public List<Categorie> getCategories() {
+		return pr.findCategorie();
+
+	}
+
 	public Produit create(Produit produit) {
 		// on créer le produit pour avoir l'ID
 		Produit p = pr.save(produit);
@@ -56,6 +62,7 @@ public class ProduitService {
 
 			Produit produit = pr.save(p);
 		}
+
 		return findById(p.getId()).get();
 	}
 

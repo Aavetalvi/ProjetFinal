@@ -1,6 +1,5 @@
 package fr.ajc.ProjetFinal.model;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -32,7 +31,6 @@ public class CommandeProduit {
 	@JoinColumn(name = "id_produit")
 	private Produit produit;
 
-	@Column(insertable = false, updatable = false)
 	private String taille;
 	private Integer quantite;
 }

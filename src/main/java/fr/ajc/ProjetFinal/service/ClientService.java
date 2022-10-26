@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import fr.ajc.ProjetFinal.exception.EmptyIdException;
 import fr.ajc.ProjetFinal.exception.RelationException;
+import fr.ajc.ProjetFinal.model.Adresse;
 import fr.ajc.ProjetFinal.model.Client;
+import fr.ajc.ProjetFinal.model.Utilisateur;
 import fr.ajc.ProjetFinal.repository.ClientRepository;
 
 @Service
@@ -18,8 +20,17 @@ public class ClientService {
 	@Autowired
 	ClientRepository clientRepository;
 
-	public Client creerClient(Client c) {
+	@Autowired
+	AdresseService as;
 
+	@Autowired
+	UtilisateurService us;
+
+	public Client creerClient(Client c) {
+		Adresse a = as.creerAdresse(c.getAdresse());
+		Utilisateur u = us.createUtilisateur(c.getUtilisateur());
+		c.setAdresse(a);
+		c.setUtilisateur(u);
 		return clientRepository.save(c);
 	}
 

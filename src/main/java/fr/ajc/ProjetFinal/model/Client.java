@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SequenceGenerator(name = "client_gen", sequenceName = "client_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "client_gen", sequenceName = "client_seq", initialValue = 2, allocationSize = 1)
 public class Client {
 
 	@Id

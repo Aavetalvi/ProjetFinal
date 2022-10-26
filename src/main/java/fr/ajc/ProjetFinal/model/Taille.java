@@ -29,7 +29,7 @@ public class Taille {
 	@ManyToOne
 	@JoinColumn(name = "id_produit")
 	@MapsId("idProduit")
-	@JsonIgnoreProperties("produit")
+	@JsonIgnoreProperties("taille")
 	private Produit produit;
 
 }

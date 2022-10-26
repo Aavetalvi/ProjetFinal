@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import fr.ajc.ProjetFinal.exception.IdNotFound;
+import fr.ajc.ProjetFinal.model.Categorie;
 import fr.ajc.ProjetFinal.model.Produit;
 import fr.ajc.ProjetFinal.repository.ProduitRepository;
 import fr.ajc.ProjetFinal.service.ProduitService;
@@ -43,6 +44,11 @@ public class ProduitController {
 	@GetMapping("/{id}")
 	public Produit getById(@PathVariable Long id) {
 		return pr.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+
+	@GetMapping("/categories")
+	public List<Categorie> getCategories() {
+		return ps.getCategories();
 	}
 
 	@PostMapping

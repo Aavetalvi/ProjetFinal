@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SequenceGenerator(name = "adresse_gen", sequenceName = "adresse_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "adresse_gen", sequenceName = "adresse_seq", initialValue = 2, allocationSize = 1)
 public class Adresse {
 
 	@Id

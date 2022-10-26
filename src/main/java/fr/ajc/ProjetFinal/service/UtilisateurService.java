@@ -19,6 +19,10 @@ public class UtilisateurService {
 	@Autowired
 	ClientService cs;
 
+	public Utilisateur createUtilisateur(Utilisateur u) {
+		return ur.save(u);
+	}
+
 	public Client findById(Utilisateur u) throws IdNotFound, MauvaisMdpException, ClientNotFoundException {
 		// on cherche si l'email correspond a un utilisateur en bdd
 		Utilisateur utilisateur = ur.findById(u.getEmail()).orElseThrow(() -> new IdNotFound("L'email n'existe pas."));

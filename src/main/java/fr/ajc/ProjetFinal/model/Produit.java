@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -41,11 +42,11 @@ public class Produit {
 	private Categorie categorie;
 
 	@ManyToMany(mappedBy = "produits")
-	@JsonIgnoreProperties({ "produits", "commandes" })
+	@JsonIgnore
 	private List<Commande> commandes;
 
 	@OneToMany(mappedBy = "produit")
-	@JsonIgnoreProperties({ "produit", "tailleId" })
+	@JsonIgnoreProperties({ "produit", "taille" })
 	private List<Taille> tailles;
 
 	@OneToMany(mappedBy = "produit")

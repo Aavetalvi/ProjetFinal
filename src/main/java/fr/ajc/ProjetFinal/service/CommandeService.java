@@ -68,6 +68,7 @@ public class CommandeService {
 		// si on est la, c'est qu'on a assez de stock. On refait la boucle, cette fois
 		// pour actualiser l'ensemble de la commande
 		for (ProduitTo pTo : cTo.getProduits()) {
+
 			// on récupère le stock en bdd du produit à la taille demandé
 			Integer stock = ts.findStockByTaille(pTo.getTaille(), pTo.getProduit().getId());
 
@@ -80,13 +81,16 @@ public class CommandeService {
 					t.setStock(stock);
 				tailles.add(t);
 			}
+
 			p.setTailles(tailles);
+
 			serviceProduit.modifyProduit(p);
 
 		}
 
 		// on créer la commande en bdd
 		Commande c = cTo.toCommande();
+
 		c = repo.save(c);
 
 		// on créer la commande_produit en bdd
