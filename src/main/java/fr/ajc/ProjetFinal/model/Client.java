@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -48,5 +49,6 @@ public class Client {
 
 	@OneToMany(mappedBy = "client")
 	@JsonIgnoreProperties("client")
+	@JsonIgnore
 	private List<Commande> commandes;
 }

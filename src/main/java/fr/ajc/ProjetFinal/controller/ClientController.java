@@ -63,7 +63,7 @@ public class ClientController {
 
 	}
 
-	@PutMapping("")
+	@PutMapping()
 	public Client modifyClient(@RequestBody Client c) throws IllegalArgumentException, EmptyIdException {
 		try {
 			return cs.updateClient(c);

@@ -42,6 +42,10 @@ public class ClientService {
 		if (Objects.isNull(c.getId())) {
 			throw new EmptyIdException("aucun id");
 		}
+
+		Adresse a = as.creerAdresse(c.getAdresse());
+		c.setAdresse(a);
+
 		return clientRepository.save(c);
 
 	}
