@@ -58,8 +58,6 @@ public class CommandeService {
 		}
 
 		// on va créer notre transfert object
-		ProduitTo pTo = new ProduitTo();
-		CommandeTo cTo = new CommandeTo();
 
 		List<ProduitTo> pTos = new ArrayList<>();
 		List<CommandeTo> cTos = new ArrayList<>();
@@ -68,6 +66,8 @@ public class CommandeService {
 
 		for (Commande commande : commandes) {
 			for (Produit p : commande.getProduits()) {
+				ProduitTo pTo = new ProduitTo();
+
 				// on récupère la ligne associant la commande, le produit, la taille et la
 				// quantité
 				CommandeProduit cp = cps.getCommandeProduit(commande.getId(), p.getId());
@@ -79,6 +79,7 @@ public class CommandeService {
 				pTos.add(pTo);
 			}
 
+			CommandeTo cTo = new CommandeTo();
 			// on construit l'objet de transfert
 			cTo.setClient(c);
 			cTo.setId(commande.getId());
