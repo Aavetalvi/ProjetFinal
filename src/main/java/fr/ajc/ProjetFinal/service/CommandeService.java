@@ -12,7 +12,9 @@ import fr.ajc.ProjetFinal.exception.EmptyIdException;
 import fr.ajc.ProjetFinal.exception.IdNotFound;
 import fr.ajc.ProjetFinal.exception.RelationException;
 import fr.ajc.ProjetFinal.exception.StockInsuffisantException;
+import fr.ajc.ProjetFinal.model.Client;
 import fr.ajc.ProjetFinal.model.Commande;
+import fr.ajc.ProjetFinal.model.CommandeProduit;
 import fr.ajc.ProjetFinal.model.Produit;
 import fr.ajc.ProjetFinal.model.Taille;
 import fr.ajc.ProjetFinal.repository.CommandeRepository;
@@ -44,6 +46,49 @@ public class CommandeService {
 
 	public Optional<Commande> findById(Long id) {
 		return repo.findById(id);
+	}
+
+	public List<CommandeTo> findByClient(Client c) throws EmptyIdException {
+		if (Objects.isNull(c)) {
+			throw new IllegalArgumentException("client ne peut pas être null");
+		}
+
+		if (Objects.isNull(c.getId())) {
+			throw new EmptyIdException("aucun id");
+		}
+
+		// on va créer notre transfert object
+		ProduitTo pTo = new ProduitTo();
+		CommandeTo cTo = new CommandeTo();
+
+		List<ProduitTo> pTos = new ArrayList<>();
+		List<CommandeTo> cTos = new ArrayList<>();
+
+		List<Commande> commandes = repo.FindCommandeByClient(c.getId());
+
+		for (Commande commande : commandes) {
+			for (Produit p : commande.getProduits()) {
+				// on récupère la ligne associant la commande, le produit, la taille et la
+				// quantité
+				CommandeProduit cp = cps.getCommandeProduit(commande.getId(), p.getId());
+
+				// on construit l'objet de transfert
+				pTo.setProduit(p);
+				pTo.setQuantite(cp.getQuantite());
+				pTo.setTaille(cp.getTaille());
+				pTos.add(pTo);
+			}
+
+			// on construit l'objet de transfert
+			cTo.setClient(c);
+			cTo.setId(commande.getId());
+			cTo.setProduits(pTos);
+			cTo.setTotal(commande.getTotal());
+
+			cTos.add(cTo);
+		}
+
+		return cTos;
 	}
 
 	public Commande create(CommandeTo cTo)

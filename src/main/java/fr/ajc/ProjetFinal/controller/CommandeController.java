@@ -20,6 +20,7 @@ import fr.ajc.ProjetFinal.exception.EmptyIdException;
 import fr.ajc.ProjetFinal.exception.IdNotFound;
 import fr.ajc.ProjetFinal.exception.RelationException;
 import fr.ajc.ProjetFinal.exception.StockInsuffisantException;
+import fr.ajc.ProjetFinal.model.Client;
 import fr.ajc.ProjetFinal.model.Commande;
 import fr.ajc.ProjetFinal.repository.CommandeProduitRepository;
 import fr.ajc.ProjetFinal.repository.CommandeRepository;
@@ -50,6 +51,15 @@ public class CommandeController {
 	@GetMapping("/{id}")
 	public Commande getById(@PathVariable Long id) {
 		return service.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+
+	@PostMapping("/client")
+	public List<CommandeTo> getByClient(@RequestBody Client client) {
+		try {
+			return service.findByClient(client);
+		} catch (EmptyIdException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
 	}
 
 	@PostMapping

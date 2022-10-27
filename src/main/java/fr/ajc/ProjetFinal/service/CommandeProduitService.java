@@ -18,6 +18,11 @@ public class CommandeProduitService {
 	@Autowired
 	CommandeProduitRepository cpr;
 
+	public CommandeProduit getCommandeProduit(Long idCommande, Long idProduit) {
+		return cpr.FindByCommandeAndProduit(idCommande, idProduit);
+
+	}
+
 	public void createCommandeProduit(Commande c, CommandeTo cTo) throws EmptyIdException {
 		for (ProduitTo produitTo : cTo.getProduits()) {
 			checkIfIdIsNull(produitTo.getProduit());

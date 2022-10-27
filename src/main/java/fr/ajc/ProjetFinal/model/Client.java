@@ -39,7 +39,7 @@ public class Client {
 
 	@OneToOne
 	@JoinColumn(name = "email_utilisateur", referencedColumnName = "email")
-	@JsonIgnoreProperties("client")
+	@JsonIgnoreProperties(value = { "client" }, allowSetters = true)
 	private Utilisateur utilisateur;
 
 	@OneToOne
@@ -48,7 +48,7 @@ public class Client {
 	private Adresse adresse;
 
 	@OneToMany(mappedBy = "client")
-	@JsonIgnoreProperties("client")
+	@JsonIgnoreProperties({ "client", "produits" })
 	@JsonIgnore
 	private List<Commande> commandes;
 }
