@@ -59,12 +59,12 @@ public class CommandeService {
 
 		// on va créer notre transfert object
 
-		List<ProduitTo> pTos = new ArrayList<>();
 		List<CommandeTo> cTos = new ArrayList<>();
 
 		List<Commande> commandes = repo.FindCommandeByClient(c.getId());
 
 		for (Commande commande : commandes) {
+			List<ProduitTo> pTos = new ArrayList<>();
 			for (Produit p : commande.getProduits()) {
 				ProduitTo pTo = new ProduitTo();
 
